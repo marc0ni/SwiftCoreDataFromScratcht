@@ -11,8 +11,9 @@ import CoreData
 
 class Book: NSManagedObject {
 
-    @NSManaged var title: String
-    @NSManaged var photo: String
+    @NSManaged var bookTitle: String
+    @NSManaged var photoUrl: String
     @NSManaged var note: String
+    @NSManaged var authorName: String
 
 }

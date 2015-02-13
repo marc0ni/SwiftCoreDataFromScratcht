@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
+    @IBOutlet weak var movieName: UITextField!
+    @IBOutlet weak var movieFileUrl: UITextField!
+    
+    var bookRecord: Book!
+    var fetchedResultsController: NSFetchedResultsController!
+    let context = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +28,15 @@ class AddViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func doneButtonTapped(sender: AnyObject) {
+    }
 
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        // The user touched the view's background, so dismiss the keyboard
+        movieName.resignFirstResponder()
+        movieFileUrl.resignFirstResponder()
+    }
+    
     /*
     // MARK: - Navigation
 

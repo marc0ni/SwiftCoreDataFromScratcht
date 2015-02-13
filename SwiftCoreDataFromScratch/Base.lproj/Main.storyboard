@@ -155,11 +155,12 @@
                         <outlet property="bookTitle" destination="7HI-kL-mG5" id="Zcc-Lv-EFy"/>
                         <outlet property="imageView" destination="zEV-mP-IGc" id="5Qa-4Z-7yn"/>
                         <outlet property="photoUrl" destination="0C7-MS-2Nt" id="dkY-rD-sHV"/>
+                        <outlet property="textView" destination="4L4-uk-9oX" id="s1b-00-1Px"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3uH-vG-ONL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1117" y="1513"/>
+            <point key="canvasLocation" x="1117" y="1413"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KG2-6r-9zn">

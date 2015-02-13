@@ -13,10 +13,13 @@ class AddViewController: UIViewController {
     @IBOutlet weak var authorName: UITextField!
     @IBOutlet weak var photoUrl: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Clear out the textView
+        textView.text = nil
     }
 
     override func didReceiveMemoryWarning() {

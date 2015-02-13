@@ -20,6 +20,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="4cR-3k-pPC">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ZYB-jE-wxb"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nOm-XM-MZO">
                                 <rect key="frame" x="0.0" y="108" width="600" height="492"/>
@@ -46,6 +49,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="lTL-0P-JEU"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="OB5-8s-Vf8"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -60,13 +67,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Books" id="OZj-4N-z8U">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="3pF-YO-kOU"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Res-IC-vhw">
                             <connections>
                                 <segue destination="QMV-TX-iDs" kind="show" identifier="idAddEditBook" id="SY7-Z8-Hxh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="4cR-3k-pPC" id="rQa-X0-rzA"/>
+                        <outlet property="tableView" destination="nOm-XM-MZO" id="YfF-2A-2vc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -84,71 +94,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Book Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AhQ-Jv-MDD">
-                                <rect key="frame" x="16" y="72" width="568" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="11P-x8-EK5"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Author Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3pV-FY-PnT">
-                                <rect key="frame" x="16" y="110" width="568" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="k2D-Y3-scd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Note (optional)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uaN-pF-Dn6">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Photo Url" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0C7-MS-2Nt">
                                 <rect key="frame" x="16" y="148" width="568" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="dkp-nv-G4i"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Photo Url (optional)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7NT-ch-bVg">
-                                <rect key="frame" x="16" y="186" width="568" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="FK7-5o-qWt"/>
-                                </constraints>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Book Title" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7HI-kL-mG5">
+                                <rect key="frame" x="16" y="72" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noimage" translatesAutoresizingMaskIntoConstraints="NO" id="RsV-yi-XUq">
-                                <rect key="frame" x="16" y="224" width="186" height="196"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Author Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Oft-RK-Ydq">
+                                <rect key="frame" x="16" y="110" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zEV-mP-IGc">
+                                <rect key="frame" x="16" y="186" width="120" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="186" id="zmf-Cx-xFu"/>
+                                    <constraint firstAttribute="height" constant="120" id="Inu-Kz-R3l"/>
+                                    <constraint firstAttribute="width" constant="120" id="VEZ-Hf-Bar"/>
                                 </constraints>
                             </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4L4-uk-9oX">
+                                <rect key="frame" x="16" y="314" width="568" height="271"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="AhQ-Jv-MDD" firstAttribute="leading" secondItem="3pV-FY-PnT" secondAttribute="leading" id="0ky-cu-RSa"/>
-                            <constraint firstItem="RsV-yi-XUq" firstAttribute="leading" secondItem="7NT-ch-bVg" secondAttribute="leading" id="76O-B6-IsZ"/>
-                            <constraint firstItem="7NT-ch-bVg" firstAttribute="trailing" secondItem="uaN-pF-Dn6" secondAttribute="trailing" id="CMT-mH-IEb"/>
-                            <constraint firstItem="3pV-FY-PnT" firstAttribute="top" secondItem="AhQ-Jv-MDD" secondAttribute="bottom" constant="8" symbolic="YES" id="Lad-0Y-BFL"/>
-                            <constraint firstItem="AhQ-Jv-MDD" firstAttribute="top" secondItem="JMn-ri-iaB" secondAttribute="bottom" constant="8" symbolic="YES" id="Mat-de-v8I"/>
-                            <constraint firstItem="3pV-FY-PnT" firstAttribute="trailing" secondItem="uaN-pF-Dn6" secondAttribute="trailing" id="W9G-y3-3sY"/>
-                            <constraint firstItem="uaN-pF-Dn6" firstAttribute="leading" secondItem="7NT-ch-bVg" secondAttribute="leading" id="XOZ-jK-9Td"/>
-                            <constraint firstItem="uaN-pF-Dn6" firstAttribute="top" secondItem="3pV-FY-PnT" secondAttribute="bottom" constant="8" symbolic="YES" id="apF-C1-lei"/>
-                            <constraint firstItem="RsV-yi-XUq" firstAttribute="top" secondItem="7NT-ch-bVg" secondAttribute="bottom" constant="8" symbolic="YES" id="d7c-9a-6R5"/>
-                            <constraint firstItem="AhQ-Jv-MDD" firstAttribute="trailing" secondItem="3pV-FY-PnT" secondAttribute="trailing" id="dqF-ec-Dhf"/>
-                            <constraint firstItem="AhQ-Jv-MDD" firstAttribute="leading" secondItem="YUw-vR-9nt" secondAttribute="leadingMargin" id="eq1-go-mMa"/>
-                            <constraint firstItem="uaN-pF-Dn6" firstAttribute="trailing" secondItem="YUw-vR-9nt" secondAttribute="trailingMargin" id="gQr-rt-6Gz"/>
-                            <constraint firstItem="3pV-FY-PnT" firstAttribute="leading" secondItem="uaN-pF-Dn6" secondAttribute="leading" id="jGc-zl-f3Z"/>
-                            <constraint firstItem="7NT-ch-bVg" firstAttribute="top" secondItem="uaN-pF-Dn6" secondAttribute="bottom" constant="8" symbolic="YES" id="paO-1i-5WK"/>
-                            <constraint firstItem="Dv1-Ja-zOh" firstAttribute="top" secondItem="RsV-yi-XUq" secondAttribute="bottom" constant="180" id="uXQ-qA-MLL"/>
+                            <constraint firstItem="zEV-mP-IGc" firstAttribute="top" secondItem="0C7-MS-2Nt" secondAttribute="bottom" constant="8" symbolic="YES" id="5b3-hD-Bbs"/>
+                            <constraint firstItem="zEV-mP-IGc" firstAttribute="leading" secondItem="4L4-uk-9oX" secondAttribute="leading" id="8Oi-TE-neQ"/>
+                            <constraint firstItem="0C7-MS-2Nt" firstAttribute="top" secondItem="Oft-RK-Ydq" secondAttribute="bottom" constant="8" symbolic="YES" id="Cpi-ns-LZa"/>
+                            <constraint firstItem="4L4-uk-9oX" firstAttribute="trailing" secondItem="YUw-vR-9nt" secondAttribute="trailingMargin" id="Iid-3y-6F9"/>
+                            <constraint firstItem="7HI-kL-mG5" firstAttribute="leading" secondItem="YUw-vR-9nt" secondAttribute="leadingMargin" id="OLr-oL-37W"/>
+                            <constraint firstItem="Oft-RK-Ydq" firstAttribute="trailing" secondItem="7HI-kL-mG5" secondAttribute="trailing" id="TCM-Ii-Ygx"/>
+                            <constraint firstItem="7HI-kL-mG5" firstAttribute="leading" secondItem="Oft-RK-Ydq" secondAttribute="leading" id="U56-kI-Tak"/>
+                            <constraint firstItem="4L4-uk-9oX" firstAttribute="top" secondItem="zEV-mP-IGc" secondAttribute="bottom" constant="8" symbolic="YES" id="Zeq-tE-PVm"/>
+                            <constraint firstItem="0C7-MS-2Nt" firstAttribute="trailing" secondItem="4L4-uk-9oX" secondAttribute="trailing" id="aTt-04-C1d"/>
+                            <constraint firstItem="Oft-RK-Ydq" firstAttribute="trailing" secondItem="0C7-MS-2Nt" secondAttribute="trailing" id="k5s-Nt-vv3"/>
+                            <constraint firstItem="Oft-RK-Ydq" firstAttribute="top" secondItem="7HI-kL-mG5" secondAttribute="bottom" constant="8" symbolic="YES" id="kDH-LH-fSa"/>
+                            <constraint firstItem="7HI-kL-mG5" firstAttribute="top" secondItem="JMn-ri-iaB" secondAttribute="bottom" constant="8" symbolic="YES" id="kTg-gb-eBw"/>
+                            <constraint firstItem="Dv1-Ja-zOh" firstAttribute="top" secondItem="4L4-uk-9oX" secondAttribute="bottom" constant="15" id="qOY-0X-1pv"/>
+                            <constraint firstItem="zEV-mP-IGc" firstAttribute="leading" secondItem="0C7-MS-2Nt" secondAttribute="leading" id="v2V-2Q-ewi"/>
+                            <constraint firstItem="Oft-RK-Ydq" firstAttribute="leading" secondItem="0C7-MS-2Nt" secondAttribute="leading" id="zP0-Gn-AxH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Book" id="nLK-i3-Kdf">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="gkk-Jy-ezf"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="gkk-Jy-ezf">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="QMV-TX-iDs" id="Agf-ds-O1z"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="authorName" destination="Oft-RK-Ydq" id="jdo-ir-FiQ"/>
+                        <outlet property="bookTitle" destination="7HI-kL-mG5" id="Zcc-Lv-EFy"/>
+                        <outlet property="imageView" destination="zEV-mP-IGc" id="5Qa-4Z-7yn"/>
+                        <outlet property="photoUrl" destination="0C7-MS-2Nt" id="dkY-rD-sHV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3uH-vG-ONL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1117" y="1426"/>
+            <point key="canvasLocation" x="1117" y="1513"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KG2-6r-9zn">
@@ -169,7 +180,4 @@
             <point key="canvasLocation" x="413" y="1059"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="noimage" width="300" height="300"/>
-    </resources>
 </document>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF683D431A8DDE1C00B0AE37 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF683D421A8DDE1C00B0AE37 /* Book.swift */; };
 		FFC2D6B31A8D6C6F00C68192 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2D6B21A8D6C6F00C68192 /* AppDelegate.swift */; };
 		FFC2D6B61A8D6C6F00C68192 /* SwiftCoreDataFromScratch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFC2D6B41A8D6C6F00C68192 /* SwiftCoreDataFromScratch.xcdatamodeld */; };
 		FFC2D6BB1A8D6C6F00C68192 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFC2D6B91A8D6C6F00C68192 /* Main.storyboard */; };
@@ -14,7 +15,6 @@
 		FFC2D6C01A8D6C6F00C68192 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFC2D6BE1A8D6C6F00C68192 /* LaunchScreen.xib */; };
 		FFC2D6CC1A8D6C6F00C68192 /* SwiftCoreDataFromScratchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2D6CB1A8D6C6F00C68192 /* SwiftCoreDataFromScratchTests.swift */; };
 		FFC2D6DC1A8D8A3F00C68192 /* BooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2D6DB1A8D8A3F00C68192 /* BooksViewController.swift */; };
-		FFC2D6E41A8D990800C68192 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2D6E31A8D990800C68192 /* Book.swift */; };
 		FFC2D6E61A8D9E1C00C68192 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC2D6E51A8D9E1C00C68192 /* AddViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF683D421A8DDE1C00B0AE37 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		FFC2D6AD1A8D6C6F00C68192 /* SwiftCoreDataFromScratch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCoreDataFromScratch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC2D6B11A8D6C6F00C68192 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFC2D6B21A8D6C6F00C68192 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,7 +41,6 @@
 		FFC2D6CA1A8D6C6F00C68192 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFC2D6CB1A8D6C6F00C68192 /* SwiftCoreDataFromScratchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCoreDataFromScratchTests.swift; sourceTree = "<group>"; };
 		FFC2D6DB1A8D8A3F00C68192 /* BooksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksViewController.swift; sourceTree = "<group>"; };
-		FFC2D6E31A8D990800C68192 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		FFC2D6E51A8D9E1C00C68192 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,7 +90,7 @@
 				FFC2D6BC1A8D6C6F00C68192 /* Images.xcassets */,
 				FFC2D6BE1A8D6C6F00C68192 /* LaunchScreen.xib */,
 				FFC2D6B41A8D6C6F00C68192 /* SwiftCoreDataFromScratch.xcdatamodeld */,
-				FFC2D6E31A8D990800C68192 /* Book.swift */,
+				FF683D421A8DDE1C00B0AE37 /* Book.swift */,
 				FFC2D6B01A8D6C6F00C68192 /* Supporting Files */,
 			);
 			path = SwiftCoreDataFromScratch;
@@ -224,7 +224,7 @@
 				FFC2D6E61A8D9E1C00C68192 /* AddViewController.swift in Sources */,
 				FFC2D6B31A8D6C6F00C68192 /* AppDelegate.swift in Sources */,
 				FFC2D6B61A8D6C6F00C68192 /* SwiftCoreDataFromScratch.xcdatamodeld in Sources */,
-				FFC2D6E41A8D990800C68192 /* Book.swift in Sources */,
+				FF683D431A8DDE1C00B0AE37 /* Book.swift in Sources */,
 				FFC2D6DC1A8D8A3F00C68192 /* BooksViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +419,7 @@
 				FFC2D6D11A8D6C6F00C68192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FFC2D6D21A8D6C6F00C68192 /* Build configuration list for PBXNativeTarget "SwiftCoreDataFromScratchTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +428,7 @@
 				FFC2D6D41A8D6C6F00C68192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

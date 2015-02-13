@@ -3,10 +3,9 @@
     <entity name="Book" representedClassName="SwiftCoreDataFromScratch.Book" syncable="YES">
         <attribute name="authorName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bookTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Book" positionX="-2547" positionY="-108" width="128" height="103"/>
+        <element name="Book" positionX="-2547" positionY="-108" width="128" height="90"/>
     </elements>
 </model>

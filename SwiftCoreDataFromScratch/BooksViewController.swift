@@ -9,11 +9,9 @@
 import UIKit
 import CoreData
 
-class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate {
+class BooksViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    var fetchedResultsController: NSFetchedResultsController!
-    let context = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()

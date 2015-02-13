@@ -7,17 +7,13 @@
 //
 
 import UIKit
-import CoreData
 
-class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
+class AddViewController: UIViewController {
     @IBOutlet weak var bookTitle: UITextField!
     @IBOutlet weak var authorName: UITextField!
     @IBOutlet weak var photoUrl: UITextField!
     @IBOutlet weak var imageView: UIImageView!
-    var bookRecord: Book!
-    var fetchedResultsController: NSFetchedResultsController!
-    let context = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,25 +32,6 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         
     }
 
-    func getImage(urlString: String) -> UIImage {
-        var imageObject = UIImage(named: "noimage")!
-        let imgUrl: NSURL = NSURL(string: urlString)!
-        
-        // Make sure the urlString contain a valid url
-        if imgUrl.scheme != nil && imgUrl.host != nil {
-            // Download an NSData representation of the image at the remote url
-            let imgData = NSData(contentsOfURL: imgUrl)
-            
-            if imgData != nil {
-                // Put the downloaded image in the variable
-                imageObject = UIImage(data: imgData!)!
-            }
-        }
-        
-        // Return the local/downloaded image
-        return imageObject
-    }
-    
     // This function is fired when you touch the view's background
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         // Dismiss the keyboard
@@ -62,8 +39,6 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         authorName.resignFirstResponder()
         photoUrl.resignFirstResponder()
         
-        // Load an image in the imageView control
-        imageView.image = getImage(photoUrl.text)
     }
     
     /*

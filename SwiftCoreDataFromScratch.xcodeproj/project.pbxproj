@@ -165,6 +165,7 @@
 		FFC2D6A51A8D6C6F00C68192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "The App Lady";
 				TargetAttributes = {

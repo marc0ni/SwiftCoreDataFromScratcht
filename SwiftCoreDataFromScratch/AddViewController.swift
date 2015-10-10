@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBOutlet weak var bookTitle: UITextField!
     @IBOutlet weak var authorName: UITextField!
     @IBOutlet weak var photoUrl: UITextField!
@@ -27,11 +28,81 @@ class AddViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    
+    // This function insert a book object (managed object) in the database then dismiss the view
+    func insertManagedObject() {
+        // Put the Book entity in the context
+        let entityDescription = NSEntityDescription.entityForName("Book", inManagedObjectContext: context)
+        
+        // Create a managed object from the Book entity and put it in the context
+        let bookObject = Book(entity: entityDescription!, insertIntoManagedObjectContext: context)
+        
+        // Set the managed object's properties
+        bookObject.bookTitle = bookTitle.text!
+        bookObject.authorName = authorName.text!
+        bookObject.photoUrl = photoUrl.text!
+        
+        let savingError: NSError?
+        
+        // Insert the managed object in the database file
+        do{
+            try context.save()
+            // The context successfully inserted the managed object in the database, display a success message in the text view
+            textView.text = "Book saved!"
+            
+            // Clear out the text fields
+            bookTitle.text = nil
+            authorName.text = nil
+            photoUrl.text = nil
+        } catch _ as NSError{
+            // The context couldn't insert the managed object in the database, display an error message in the textView
+            textView.text = "Failed to save the context with error = \(savingError?.localizedDescription)"
+        }
+    }
+    
+    func getImage(urlString: String) -> UIImage {
+        var imageObject = UIImage(named: "noimage")!
+        
+        // Strip spaces from either end of the String
+        let trimmedUrlString = urlString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        let imgUrl: NSURL = NSURL(string: trimmedUrlString)!
+        
+        // Make sure the urlString contain a valid url
+        if imgUrl.scheme != nil && imgUrl.host != nil {
+            // Download an NSData representation of the image at the remote url
+            let imgData = NSData(contentsOfURL: imgUrl)
+            
+            if imgData != nil {
+                // Put the downloaded image in the variable
+                imageObject = UIImage(data: imgData!)!
+            }
+        }
+        
+        // Return the local/downloaded image
+        return imageObject
+    }
+
+
+    
     @IBAction func doneButtonTapped(sender: AnyObject) {
         // Dismiss the keyboard
         bookTitle.resignFirstResponder()
         authorName.resignFirstResponder()
         photoUrl.resignFirstResponder()
+        
+        // Make sure required text fields aren't empty
+        if bookTitle.text!.isEmpty || authorName.text!.isEmpty {
+            textView.text = "Both the Book Title and the Author Name is requred"
+        } else {
+            // Insert a managed object in the database
+            insertManagedObject()
+
+            
+            // Display a success message in the text view
+            textView.text = "Book saved!"
+        }
+
         
     }
 
@@ -41,7 +112,9 @@ class AddViewController: UIViewController {
         bookTitle.resignFirstResponder()
         authorName.resignFirstResponder()
         photoUrl.resignFirstResponder()
-        
+    
+        // Load an image in the imageView control
+        imageView.image = getImage(photoUrl.text!)
     }
     
     /*

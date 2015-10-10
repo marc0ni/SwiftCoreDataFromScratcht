@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class BooksViewController: UIViewController {
+class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
@@ -48,13 +48,41 @@ class BooksViewController: UIViewController {
 
     // Override to support editing the table view.
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        let managedObjectToDelete = fetchedResultsController.objectAtIndexPath(indexPath) as Book
+        context.deleteObject(managedObjectToDelete)
+        
+        let savingError: NSError?
+        do {
+            try context.save()
+        } catch _ as NSError{
+            // The context couldn't insert the managed object in the database, display an error message in the textView
+            print ("Failed to save the context with error = \(savingError?.localizedDescription)")
+        }
+
     }
+    
+    
+    // MARK: -  NSFetchedResultsController delegate functions    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        if type == .Delete {
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+        } else if type == .Insert {
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        } else if type == .Update {
+            tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.endUpdates()
+    }
+
+    
+ 
 
     /*
     // MARK: - Navigation

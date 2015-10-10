@@ -21,7 +21,16 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         
         // Clear out the textView
         textView.text = nil
+        
+        if bookObject != nil {
+            bookTitle.text = bookObject.bookTitle
+            authorName.text = bookObject.authorName
+            photoUrl.text = bookObject.photoUrl
+        }
     }
+    
+
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -29,6 +38,8 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
     }
     
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    var bookObject: Book!
+
     
     // This function insert a book object (managed object) in the database then dismiss the view
     func insertManagedObject() {
@@ -82,6 +93,31 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         // Return the local/downloaded image
         return imageObject
     }
+    
+    // This function update an existing managedObject in the database then dismiss the view
+    func updateManagedObject() {
+        // Reset the bookObject's properties with values entered in the text fields
+        bookObject.bookTitle = bookTitle.text!
+        bookObject.authorName = authorName.text!
+        bookObject.photoUrl = photoUrl.text!
+        
+        let savingError: NSError?
+        
+        do{
+            try context.save()
+            // The context successfully inserted the managed object in the database, display a success message in the text view
+            textView.text = "Book saved!"
+            
+            // Clear out the text fields
+            bookTitle.text = nil
+            authorName.text = nil
+            photoUrl.text = nil
+        } catch _ as NSError{
+            // The context couldn't insert the managed object in the database, display an error message in the textView
+            textView.text = "Failed to save the context with error = \(savingError?.localizedDescription)"
+        }
+    }
+
 
 
     
@@ -93,17 +129,19 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         
         // Make sure required text fields aren't empty
         if bookTitle.text!.isEmpty || authorName.text!.isEmpty {
-            textView.text = "Both the Book Title and the Author Name is requred"
-        } else {
-            // Insert a managed object in the database
-            insertManagedObject()
-
-            
-            // Display a success message in the text view
-            textView.text = "Book saved!"
-        }
-
+            textView.text = "Both the Book Title and the Author Name is required"
+            // Re-initialize the view's text fields with the previously selected managed object's properties
+            bookTitle.text = bookObject.bookTitle
+            authorName.text = bookObject.authorName
+            photoUrl.text = bookObject.photoUrl
+            return // Don't execute remaining code in the function
         
+            if bookObject == nil {
+                insertManagedObject()
+            } else {
+                updateManagedObject()
+            }
+        }
     }
 
     // This function is fired when you touch the view's background

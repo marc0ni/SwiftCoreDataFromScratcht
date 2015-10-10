@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 class BooksViewController: UIViewController {
@@ -16,6 +17,9 @@ class BooksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    var bookObject: Book!
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -36,7 +36,7 @@ class AddViewController: UIViewController {
     }
 
     // This function is fired when you touch the view's background
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+   override func touchesBegan(touches: Set<UITouch>, withEvent e: UIEvent?) {
         // Dismiss the keyboard
         bookTitle.resignFirstResponder()
         authorName.resignFirstResponder()

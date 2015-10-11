@@ -80,6 +80,57 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
     }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        
+        if !searchText.isEmpty {
+            // Clear out the fetchedResultController
+            fetchedResultsController = nil
+            
+            // Setup the fetch request
+            let fetchRequest = NSFetchRequest(entityName: "Book")
+            
+            fetchRequest.fetchLimit = 25
+            fetchRequest.predicate = NSPredicate(format: "bookTitle contains[cd] %@", searchText)
+            
+            let sortDescriptor = NSSortDescriptor(key: "bookTitle", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+            
+            // Pass the fetchRequest and the context as parameters to the fetchedResultController
+            fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext:context, sectionNameKeyPath: nil, cacheName: nil)
+            
+            // Make the fetchedResultController a delegate of the MoviesViewController class
+            fetchedResultsController.delegate = self
+            
+            // Execute the fetch request or display an error message in the Debugger console
+            var error: NSError? = nil
+            /*if (!fetchedResultsController.performFetch(&error)) {
+                print("Error: \(error?.localizedDescription)")
+            }*/
+            
+            do {
+                try !fetchedResultsController.performFetch(&error)()
+            } catch _ as NSError{
+                 print("Error: \(error?.localizedDescription)")
+            }
+            
+            // Refresh the table view to show search results
+            tableView.reloadData()
+        }
+    }
+    
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar!) {
+        searchBar.text = nil
+        searchBar.showsCancelButton = false // Hide the cancel
+        searchBar.resignFirstResponder() // Hide the keyboard
+        fetchManagedObjects()
+        
+        // Refresh the table view to show fetchedResultController results
+        tableView.reloadData()
+    }
+
 
     
  

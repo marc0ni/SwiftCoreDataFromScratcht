@@ -19,9 +19,9 @@ The original SWIFT CORE DATA FROM SCRATCH tutorials were created in February 201
 
 To handle the error handling problem, I generated a Test Project with Xcode 7. First, I corrected error handling problems in the  SWIFT CORE “app delegate” by pasting in the applicable code from the Test Project. From those edits I was able to determine the “do/try/catch” pattern now being used for error handling. I adapted that pattern in the other files which were also having error handling problems, and my error handling issues disappeared.
 
-But at this point I am still left with two errors in this initial stage, errors which websites (including StackOverFlow) haven’t offered clear advice. They are as follows:
+But at this point I am still left with two errors in this initial stage, errors which websites (including StackOverFlow) haven’t offered clear advice. Starting on the "find-managed-object" branch, the errors are as follows:
 
-In the “BooksViewController” file, (commitEditingStyle function) this error shows:<br>
+<blockquote>In the “BooksViewController” file, (commitEditingStyle function) this error shows:<br>
 <i>Variable 'savingError' captured by a closure before being initialized</i><br>
 In response to this line of code:<br>
 <i>print("Failed to save the context with error = \(savingError?.localizedDescription)”)</i><br>
@@ -29,5 +29,5 @@ In response to this line of code:<br>
 In the “AddViewController” file, (getImage function), this error shows:<br>
 <i>Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</i><br>
 In response to this line of code:<br>
- <i>if imgUrl.scheme != nil && imgUrl.host != nil</i>
+ <i>if imgUrl.scheme != nil && imgUrl.host != nil</i></blockquote>
 

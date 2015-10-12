@@ -21,13 +21,13 @@ To handle the error handling problem, I generated a Test Project with Xcode 7. F
 
 But at this point I am still left with two errors in this initial stage, errors which websites (including StackOverFlow) haven’t offered clear advice. They are as follows:
 
-In the “BooksViewController” file, (commitEditingStyle function) this error shows:
-<p style="font-family:'Courier New'">Variable 'savingError' captured by a closure before being initialized</p>
-In response to this line of code:
- <p style="font-family:'Courier New'">print("Failed to save the context with error = \(savingError?.localizedDescription)”)</p>
+In the “BooksViewController” file, (commitEditingStyle function) this error shows:<br>
+<i>Variable 'savingError' captured by a closure before being initialized</i><br>
+In response to this line of code:<br>
+<i>print("Failed to save the context with error = \(savingError?.localizedDescription)”)</i><br>
 
-In the “AddViewController” file, (getImage function), this error shows:
-<p style="font-family:'Courier New'">Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</p>
-In response to this line of code:
- <p style="font-family:'Courier New'">if imgUrl.scheme != nil && imgUrl.host != nil</p>
+In the “AddViewController” file, (getImage function), this error shows:<br>
+<i>Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</i><br>
+In response to this line of code:<br>
+ <i>if imgUrl.scheme != nil && imgUrl.host != nil</i>
 

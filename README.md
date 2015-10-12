@@ -25,7 +25,8 @@ But at this point I am still left with two errors in this initial stage, errors 
 <i>Variable 'savingError' captured by a closure before being initialized</i><br>
 In response to this line of code:<br>
 <i>print("Failed to save the context with error = \(savingError?.localizedDescription)”)</i><br>
-
+<p></p>
+<p></p>
 In the “AddViewController” file, (getImage function), this error shows:<br>
 <i>Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</i><br>
 In response to this line of code:<br>

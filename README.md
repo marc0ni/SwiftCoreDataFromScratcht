@@ -19,7 +19,7 @@ The original SWIFT CORE DATA FROM SCRATCH tutorials were created in February 201
 
 To handle the error handling problem, I generated a Test Project with Xcode 7. First, I corrected error handling problems in the  SWIFT CORE “app delegate” by pasting in the applicable code from the Test Project. From those edits I was able to determine the “do/try/catch” pattern now being used for error handling. I adapted that pattern in the other files which were also having error handling problems, and my error handling issues disappeared.
 
-But at this point I am still left with two errors in this initial stage, errors which websites (including StackOverFlow) haven’t offered clear advice. Starting on the "find-managed-object" branch, the errors are as follows:
+But at this point I am still left with two errors in this initial stage, errors which websites (including StackOverFlow) haven’t offered clear advice. Starting on the "find-managed-object" branch, the error is as follows:
 
 <blockquote>
 In the “AddViewController” file, (getImage function), this error shows:<br>

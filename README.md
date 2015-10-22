@@ -1,6 +1,6 @@
 # SwiftCoreDataFromScratch
 
-10/11/14<br>
+10/11/15<br>
 This file is a TableView template based on the SWIFT CORE DATA FROM SCRATCH tutorials from http://theapplady.net These tutorials are arranged into 5 workshops preceded by an introductory file w/the base project. Workshops are organized as follows:
 
 http://theapplady.net/swift-core-data-from-scratch-introduction/<br>
@@ -14,7 +14,7 @@ I started using these tutorials as a means of exploring TableView features. Once
 
 After I get this initial TableView project working, then it will be time to replicate this project into my actual project. The second project will entail adding a custom keyboard and it will use an API that Apple hasn't released yet.<br><br>
 
-10/12/14<br>
+10/12/15<br>
 The original SWIFT CORE DATA FROM SCRATCH tutorials were created in February 2015 and March 2015 using Xcode 6.x. When the Xcode 7 was released in September, a lot of updating had to occur with the SWIFT CORE project. Fortunately, Xcode 7 converted much of the project’s code and automatically offered suggestions for fixing many other errors — with the exception of “error handling” itself.
 
 To handle the error handling problem, I generated a Test Project with Xcode 7. First, I corrected error handling problems in the  SWIFT CORE “app delegate” by pasting in the applicable code from the Test Project. From those edits I was able to determine the “do/try/catch” pattern now being used for error handling. I adapted that pattern in the other files which were also having error handling problems, and my error handling issues disappeared.
@@ -28,5 +28,5 @@ In the “AddViewController” file, (getImage function), this error shows:<br>
 In response to this line of code:<br>
  <i>if imgUrl.scheme != nil && imgUrl.host != nil</i></blockquote><br><br>
 
-10/21/14<br>
+10/22/15<br>
 Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically

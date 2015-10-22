@@ -22,7 +22,23 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var bookObject: Book!
     var fetchedResultsController: NSFetchedResultsController!
-
+    let collation = UILocalizedIndexedCollation.currentCollation() as UILocalizedIndexedCollation
+    var sections: [[Book]] = []
+    var objects: [Book] = [] {
+        didSet {
+            let selector: Selector = "localizedTitle"
+            
+            sections = [[Book]](count: collation.sectionTitles.count, repeatedValue: [])
+            
+            let sortedBooks = collation.sortedArrayFromArray(objects, collationStringSelector: selector) as! [Book]
+            for object in sortedBooks {
+                let sectionNumber = collation.sectionForObject(object, collationStringSelector: selector)
+                sections[sectionNumber].append(object)
+            }
+            
+            self.tableView.reloadData()
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -55,6 +71,19 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
 
 
     // MARK: - Table view data source
+    
+     func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
+        return collation.sectionTitles[section] as String
+    }
+    
+    func sectionIndexTitlesForTableView(tableView: UITableView!) -> [AnyObject]! {
+        return collation.sectionIndexTitles
+    }
+    
+    func tableView(tableView: UITableView!, sectionForSectionIndexTitle title: String!, atIndex index: Int) -> Int {
+        return collation.sectionForSectionIndexTitleAtIndex(index)
+    }
+
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections in the table view

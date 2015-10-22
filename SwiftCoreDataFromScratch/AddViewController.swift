@@ -72,7 +72,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         }
     }
     
-    func getImage(urlString: String) -> UIImage {
+    class func getImage(urlString: String) -> UIImage {
         var imageObject = UIImage(named: "noimage")!
         
         // Strip spaces from either end of the String
@@ -149,7 +149,8 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         photoUrl.resignFirstResponder()
     
         // Load an image in the imageView control
-        imageView.image = getImage(photoUrl.text!)
+        imageView.image = AddViewController.getImage(photoUrl.text!)
+
     }
     
     /*

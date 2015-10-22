@@ -57,20 +57,29 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     // MARK: - Table view data source
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // Return the number of sections.
-        return 0
+        // Return the number of sections in the table view
+        return fetchedResultsController.sections!.count
     }
-
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return the number of rows in the section.
-        return 0
+        // Return the number of rows in the section
+        let sectionInfo = fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
+        return sectionInfo.numberOfObjects
     }
-
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        
+        // Put a managed object in the book object
+        let book = fetchedResultsController.objectAtIndexPath(indexPath) as! Book
+        
+        
+        // Configure the table view cell and return it
+        let stringObject = book.photoUrl as String!
+        cell.imageView!.image = AddViewController.getImage(stringObject)
+        cell.textLabel!.text = book.bookTitle
+        cell.detailTextLabel!.text = book.authorName
         return cell
     }
 

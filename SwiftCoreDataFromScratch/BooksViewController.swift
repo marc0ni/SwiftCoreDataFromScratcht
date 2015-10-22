@@ -16,15 +16,43 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchManagedObjects()
     }
     
-    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var bookObject: Book!
+    var fetchedResultsController: NSFetchedResultsController!
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func fetchManagedObjects() {
+        // Setup the fetch request with a sortDescriptor for the fetchedResultController
+        let fetchRequest = NSFetchRequest(entityName: "Book")
+        
+        fetchRequest.fetchLimit = 25
+        
+        let sortDescriptor = NSSortDescriptor(key: "bookTitle", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        // Pass the fetchRequest and the context as parameters to the fetchedResultController
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext:context,sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Make the fetchedResultsController a delegate of this class
+        fetchedResultsController.delegate = self
+        
+        // Execute the fetch request or display an error message in the Debugger console
+        let error: NSError? = nil
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ as NSError{
+            print("Error: \(error?.localizedDescription)")
+        }
+    }
+
 
     // MARK: - Table view data source
 
@@ -48,17 +76,17 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
 
     // Override to support editing the table view.
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let managedObjectToDelete = fetchedResultsController.objectAtIndexPath(indexPath) as Book
+        let managedObjectToDelete = fetchedResultsController.objectAtIndexPath(indexPath) as! Book
         context.deleteObject(managedObjectToDelete)
         
-        let savingError: NSError?
+        let savingError: NSError = NSError(domain: "context", code: 123, userInfo: nil)
         do {
             try context.save()
         } catch _ as NSError{
             // The context couldn't insert the managed object in the database, display an error message in the textView
-            print ("Failed to save the context with error = \(savingError?.localizedDescription)")
+            print("Failed to save the context with error = \(savingError.localizedDescription)")
         }
-
+        
     }
     
     
@@ -76,7 +104,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
             tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
         }
     }
-    
+   
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
     }
@@ -104,13 +132,10 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
             fetchedResultsController.delegate = self
             
             // Execute the fetch request or display an error message in the Debugger console
-            var error: NSError? = nil
-            /*if (!fetchedResultsController.performFetch(&error)) {
-                print("Error: \(error?.localizedDescription)")
-            }*/
+            let error: NSError? = nil
             
             do {
-                try !fetchedResultsController.performFetch(&error)()
+                try fetchedResultsController.performFetch()
             } catch _ as NSError{
                  print("Error: \(error?.localizedDescription)")
             }

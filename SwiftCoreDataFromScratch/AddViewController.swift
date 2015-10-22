@@ -37,7 +37,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var bookObject: Book!
 
     
@@ -54,7 +54,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         bookObject.authorName = authorName.text!
         bookObject.photoUrl = photoUrl.text!
         
-        let savingError: NSError?
+        let savingError: NSError = NSError(domain: "context", code: 123, userInfo: nil)
         
         // Insert the managed object in the database file
         do{
@@ -68,7 +68,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
             photoUrl.text = nil
         } catch _ as NSError{
             // The context couldn't insert the managed object in the database, display an error message in the textView
-            textView.text = "Failed to save the context with error = \(savingError?.localizedDescription)"
+            textView.text = "Failed to save the context with error = \(savingError.localizedDescription)"
         }
     }
     
@@ -80,7 +80,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         let imgUrl: NSURL = NSURL(string: trimmedUrlString)!
         
         // Make sure the urlString contain a valid url
-        if imgUrl.scheme != nil && imgUrl.host != nil {
+        if imgUrl.scheme.isEmpty != true && imgUrl.host != nil {
             // Download an NSData representation of the image at the remote url
             let imgData = NSData(contentsOfURL: imgUrl)
             
@@ -101,7 +101,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         bookObject.authorName = authorName.text!
         bookObject.photoUrl = photoUrl.text!
         
-        let savingError: NSError?
+        let savingError: NSError = NSError(domain: "context", code: 123, userInfo: nil)
         
         do{
             try context.save()
@@ -114,11 +114,9 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
             photoUrl.text = nil
         } catch _ as NSError{
             // The context couldn't insert the managed object in the database, display an error message in the textView
-            textView.text = "Failed to save the context with error = \(savingError?.localizedDescription)"
+            textView.text = "Failed to save the context with error = \(savingError.localizedDescription)"
         }
     }
-
-
 
     
     @IBAction func doneButtonTapped(sender: AnyObject) {
@@ -135,12 +133,11 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
             authorName.text = bookObject.authorName
             photoUrl.text = bookObject.photoUrl
             return // Don't execute remaining code in the function
-        
-            if bookObject == nil {
-                insertManagedObject()
-            } else {
-                updateManagedObject()
-            }
+        }
+        if bookObject == nil {
+            insertManagedObject()
+        } else {
+            updateManagedObject()
         }
     }
 

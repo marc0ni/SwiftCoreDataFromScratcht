@@ -29,4 +29,19 @@ In response to this line of code:<br>
  <i>if imgUrl.scheme != nil && imgUrl.host != nil</i></blockquote><br><br>
 
 10/22/15<br>
-Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically
+Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically.<br><br>
+
+10/24/15<br>
+Copied, pasted, and edited these functions from the "ContactsTableViewController" file of the iContactU project:<br>
+<ol>
+<li>partitionObjects</li>
+<li>numberOfSectionsInTableView</li>
+<li>tableView</li>
+<li>sectionForSectionIndexTitle</li>
+<li>sectionIndexTitlesForTableView</li>
+</ol><br>
+At this point, I have this error occurring in the "tableView" function: <br>
+<i>fatal error: Array index out of range</i><br>
+When that function is commented out, the app will return these errors:<br>
+<i>2015-10-24 13:32:05.461 SwiftCoreDataFromScratch[1157:56084] *** Assertion failure in -[UITableView _endCellAnimationsWithContext:], /BuildRoot/Library/Caches/com.apple.xbs/Sources/UIKit_Sim/UIKit-3505.16/UITableView.m:1504<br>
+2015-10-24 13:32:05.468 SwiftCoreDataFromScratch[1157:56084] CoreData: error: Serious application error.  An exception was caught from the delegate of NSFetchedResultsController during a call to -controllerDidChangeContent:.  attempt to insert row 0 into section 0, but there are only 0 rows in section 0 after the update with userInfo (null)</i>

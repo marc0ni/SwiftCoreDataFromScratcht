@@ -32,7 +32,7 @@ In response to this line of code:<br>
 Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically.<br><br>
 
 10/24/15<br>
-Copied, pasted, and edited these functions from the "ContactsTableViewController" file of the iContactU project:<br>
+Copied, pasted, and edited these functions from the "ContactsTableViewController" file of the https://github.com/rizal72/iContactU/blob/master/iContactU/ContactsTableViewController.swift project:<br>
 <ol>
 <li>partitionObjects</li>
 <li>numberOfSectionsInTableView</li>

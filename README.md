@@ -29,7 +29,7 @@ In response to this line of code:<br>
  <i>if imgUrl.scheme != nil && imgUrl.host != nil</i></blockquote><br><br>
 
 10/22/15<br>
-Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically.<br><br>
+Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically.<br>
 
 10/24/15<br>
 Copied, pasted, and edited these functions from https://github.com/rizal72/iContactU/blob/master/iContactU/ContactsTableViewController.swift :<br>
@@ -39,7 +39,7 @@ Copied, pasted, and edited these functions from https://github.com/rizal72/iCont
 <li>tableView</li>
 <li>sectionForSectionIndexTitle</li>
 <li>sectionIndexTitlesForTableView</li>
-</ol><br>
+</ol>
 At this point, I have these errors occurring in the "tableView" function: <br>
 <blockquote><i>fatal error: Array index out of range</i><br><br>
 When that function is commented out, the app will return these errors:<br>

@@ -42,8 +42,8 @@ Copied, pasted, and edited these functions from https://github.com/rizal72/iCont
 </ol>
 At this point, I this error occurring in the "tableView" function:
 <blockquote><i>fatal error: Array index out of range</i></blockquote><br>
+
 When that function is commented out, the app will return these errors:
 <blockquote><i>2015-10-24 13:32:05.461 SwiftCoreDataFromScratch[1157:56084] *** Assertion failure in -[UITableView _endCellAnimationsWithContext:], /BuildRoot/Library/Caches/com.apple.xbs/Sources/UIKit_Sim/UIKit-3505.16/UITableView.m:1504<br><br>
-
 
 2015-10-24 13:32:05.468 SwiftCoreDataFromScratch[1157:56084] CoreData: error: Serious application error.  An exception was caught from the delegate of NSFetchedResultsController during a call to -controllerDidChangeContent:.  attempt to insert row 0 into section 0, but there are only 0 rows in section 0 after the update with userInfo (null)</i><blockquote>

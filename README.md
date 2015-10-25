@@ -42,7 +42,7 @@ Copied, pasted, and edited these functions from https://github.com/rizal72/iCont
 </ol>
 At this point, I this error occurring in the "tableView" function:
 <blockquote><i>fatal error: Array index out of range</i></blockquote><br>
-When that function is commented out, the app will return these errors:<br>
+When that function is commented out, the app will return these errors:
 <blockquote><i>2015-10-24 13:32:05.461 SwiftCoreDataFromScratch[1157:56084] *** Assertion failure in -[UITableView _endCellAnimationsWithContext:], /BuildRoot/Library/Caches/com.apple.xbs/Sources/UIKit_Sim/UIKit-3505.16/UITableView.m:1504<br><br>
 
 

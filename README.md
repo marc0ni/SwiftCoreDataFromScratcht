@@ -26,7 +26,7 @@ ERROR CORRECTED<br>
 In the “AddViewController” file, (getImage function), this error shows:<br>
 <i>Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</i><br>
 In response to this line of code:<br>
- <i>if imgUrl.scheme != nil && imgUrl.host != nil</i></blockquote><br><br>
+ <i>if imgUrl.scheme != nil && imgUrl.host != nil</i></blockquote><br>
 
 10/22/15<br>
 Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically.<br>

@@ -19,6 +19,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         fetchManagedObjects()
     }
     
+    var books:NSArray = [Book]()
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var bookObject: Book!
     var fetchedResultsController: NSFetchedResultsController!
@@ -68,11 +69,97 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
             print("Error: \(error?.localizedDescription)")
         }
     }
+    
+    
+    func partitionObjects(array:NSArray, collationStringSelector:Selector) -> NSArray{
+        
+        let collation:UILocalizedIndexedCollation = UILocalizedIndexedCollation.currentCollation() as UILocalizedIndexedCollation
+        
+        //section count is take from sectionTitles and not sectionIndexTitles
+        let sectionCount = collation.sectionTitles.count
+        
+        let unsortedSections = NSMutableArray(capacity: sectionCount)
+        
+        //create an array to hold the data for each section
+        for _ in collation.sectionTitles{
+            let emptyArray = NSMutableArray()
+            unsortedSections.addObject(emptyArray);
+        }
+        
+        //put each object into a section
+        for object in array{
+            let index:Int = collation.sectionForObject(object, collationStringSelector: collationStringSelector)
+            unsortedSections.objectAtIndex(index).addObject(object)
+        }
+        
+        let sections = NSMutableArray(capacity: sectionCount)
+        
+        //sort each section
+        for section in unsortedSections{
+            sections.addObject(collation.sortedArrayFromArray(section as! NSMutableArray as [AnyObject], collationStringSelector: collationStringSelector))
+        }
+        
+        return sections;
+    }
+
 
 
     // MARK: - Table view data source
     
-     func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
+        // Return the number of sections.
+        
+        let numberOfSections = UILocalizedIndexedCollation.currentCollation().sectionTitles.count
+        //println("numberOfSections: \(numberOfSections)")
+        return numberOfSections
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
+        // Return the number of rows in the section.
+        
+        return (books.count > 0) ? books.objectAtIndex(section).count : 0
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        
+        if(books.count > 0){
+            let book = books[indexPath.section][indexPath.row] as! Book
+            
+            // Configure the table view cell and return it
+            let stringObject = book.photoUrl as String!
+            cell.imageView!.image = AddViewController.getImage(stringObject)
+            cell.textLabel!.text = book.bookTitle
+            cell.detailTextLabel!.text = book.authorName
+            
+            //IMAGE:
+            
+            //RESIZING DONE IN CUSTOM TABLE CELL !!!!
+            //cell.contactImageView.frame = CGRectMake(0, 0, 75, 75)
+            
+            /*if (contact.thumbnail != nil){
+                cell.contactImageView.image = contact.thumbnail
+            }else{
+                cell.contactImageView.image = UIImage(named: "dummy")
+            }*/
+        }
+        return cell
+    }
+
+    
+    /*func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    let showSection:Bool = books.objectAtIndex(section).count != 0
+    
+    //only show the section title if there are rows in the section
+    return (showSection) ? (UILocalizedIndexedCollation.currentCollation().sectionTitles[section] as String) : nil;
+    
+    }*/
+
+    
+     /*func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
         return collation.sectionTitles[section] as String
     }
     
@@ -110,7 +197,21 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         cell.textLabel!.text = book.bookTitle
         cell.detailTextLabel!.text = book.authorName
         return cell
+    }*/
+    
+    //INDEX:
+    
+    func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+        
+        //sectionForSectionIndexTitleAtIndex: is a bit buggy, but is still useable
+        return UILocalizedIndexedCollation.currentCollation().sectionForSectionIndexTitleAtIndex(index)
+        
     }
+    
+    func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+        return UILocalizedIndexedCollation.currentCollation().sectionIndexTitles
+    }
+
 
     // Override to support editing the table view.
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {

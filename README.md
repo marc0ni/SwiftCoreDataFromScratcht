@@ -21,13 +21,12 @@ To handle the error handling problem, I generated a Test Project with Xcode 7. F
 
 But at this point I am still left with two errors in this initial stage, errors which websites (including StackOverFlow) haven’t offered clear advice. Starting on the "find-managed-object" branch, the error is as follows:
 
-<blockquote>
 In the “AddViewController” file, (getImage function), this error shows:<br>
-<i>Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</i><br>
+<blockquote><i>Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</i><br>
 In response to this line of code:<br>
- <i>if imgUrl.scheme != nil && imgUrl.host != nil</i></blockquote><br>
+ <i>if imgUrl.scheme != nil && imgUrl.host != nil</i><br>
 ERROR CORRECTED<br> 
- <i>if imgUrl.scheme.isEmpty != true && imgUrl.host != nil</i><br>
+ <i>if imgUrl.scheme.isEmpty != true && imgUrl.host != nil</i></blockquote><br>
 
 10/22/15<br>
 Added UILocalizedIndexCollation to project. Index is added successfully to right side of tableView, but the sections are not sorting the contents alphabetically.<br>

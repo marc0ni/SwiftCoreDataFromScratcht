@@ -21,11 +21,11 @@ To handle the error handling problem, I generated a Test Project with Xcode 7. F
 
 But at this point I am still left with two errors in this initial stage, errors which websites (including StackOverFlow) haven’t offered clear advice. Starting on the "find-managed-object" branch, the error is as follows:
 
-In the “AddViewController” file, (getImage function), this error shows:<br>
+In the “AddViewController” file, (getImage function), this error shows:
 <blockquote><i>Binary operator '!=' cannot be applied to operands of type 'String' and 'NilLiteralConvertible'</i><br>
 In response to this line of code:<br>
  <i>if imgUrl.scheme != nil && imgUrl.host != nil</i><br>
-ERROR CORRECTED<br> 
+ERROR CORRECTED:<br> 
  <i>if imgUrl.scheme.isEmpty != true && imgUrl.host != nil</i></blockquote><br>
 
 10/22/15<br>
@@ -40,7 +40,7 @@ Copied, pasted, and edited these functions from https://github.com/rizal72/iCont
 <li>sectionForSectionIndexTitle</li>
 <li>sectionIndexTitlesForTableView</li>
 </ol>
-At this point, I this error occurring in the "tableView" function: <br>
+At this point, I this error occurring in the "tableView" function:
 <blockquote><i>fatal error: Array index out of range</i></blockquote><br>
 When that function is commented out, the app will return these errors:<br>
 <blockquote><i>2015-10-24 13:32:05.461 SwiftCoreDataFromScratch[1157:56084] *** Assertion failure in -[UITableView _endCellAnimationsWithContext:], /BuildRoot/Library/Caches/com.apple.xbs/Sources/UIKit_Sim/UIKit-3505.16/UITableView.m:1504<br><br>

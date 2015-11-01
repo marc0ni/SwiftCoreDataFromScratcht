@@ -244,9 +244,9 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         }
     }
    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    /*func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
-    }
+    }*/
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         searchBar.setShowsCancelButton(true, animated: true)

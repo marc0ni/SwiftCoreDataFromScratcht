@@ -29,9 +29,6 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         }
     }
     
-
-
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,6 +43,9 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         // Put the Book entity in the context
         let entityDescription = NSEntityDescription.entityForName("Book", inManagedObjectContext: context)
         
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        _ = appDelegate.managedObjectContext
+        
         // Create a managed object from the Book entity and put it in the context
         let bookObject = Book(entity: entityDescription!, insertIntoManagedObjectContext: context)
         
@@ -54,6 +54,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         bookObject.authorName = authorName.text!
         bookObject.photoUrl = photoUrl.text!
         
+        
         let savingError: NSError = NSError(domain: "context", code: 123, userInfo: nil)
         
         // Insert the managed object in the database file
@@ -61,6 +62,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
             try context.save()
             // The context successfully inserted the managed object in the database, display a success message in the text view
             textView.text = "Book saved!"
+        
             
             // Clear out the text fields
             bookTitle.text = nil

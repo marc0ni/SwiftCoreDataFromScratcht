@@ -14,18 +14,58 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchManagedObjects()
     }
     
     var books:NSArray = [Book]()
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        /*let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        let fetchRequest = NSFetchRequest(entityName: "Book")
+        
+        do {
+            let fetchResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
+            if let results = fetchResults {
+                books = results
+            }
+        } catch {
+            print("Could not fetch")
+        }*/
+        
+    }
+    
+    func fetchResults(){
+        //var error: NSError?
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "Book")
+        //let fetchResults = managedContext.executeFetchRequest(fetchRequest/*, error: &error*/) as? [Book]
+        do {
+            let fetchResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
+            if let results = fetchResults {
+                books = results
+            }
+        } catch {
+            print("Could not fetch")
+        }
+        return fetchResults()
+        
+    }
+    
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var bookObject: Book!
     var fetchedResultsController: NSFetchedResultsController!
     let collation = UILocalizedIndexedCollation.currentCollation() as UILocalizedIndexedCollation
-    var sections: [[Book]] = []
-    var objects: [Book] = [] {
+    //var sections: [[Book]] = []
+    /*var objects: [Book] = [] {
         didSet {
             let selector: Selector = "localizedTitle"
             
@@ -39,7 +79,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
             
             self.tableView.reloadData()
         }
-    }
+    }*/
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,8 +110,37 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         }
     }
     
+    func partitionObjects(array:NSArray, collationStringSelector:Selector) -> NSArray {
+        let collation:UILocalizedIndexedCollation = UILocalizedIndexedCollation.currentCollation() as UILocalizedIndexedCollation
+        
+        let sectionCount = collation.sectionTitles.count
+        
+        let unsortedSections = NSMutableArray(capacity: sectionCount)
+        
+        // Create array to hold data for each section
+        for var i = 0; i < sectionCount; i++ {
+            let emptyArray = NSMutableArray()
+            unsortedSections.addObject(emptyArray);
+        }
+        
+        // Put each object into a section
+        for object in array{
+            let index:Int = collation.sectionForObject(object, collationStringSelector: collationStringSelector)
+            unsortedSections.objectAtIndex(index).addObject(object)
+        }
+        
+        let sections = NSMutableArray(capacity: sectionCount)
+        
+        //sort each section
+        for section in unsortedSections{
+            sections.addObject(collation.sortedArrayFromArray(section as! NSMutableArray as [AnyObject], collationStringSelector: collationStringSelector))
+        }
+        
+        return sections;
+    }
+
     
-    func partitionObjects(array:NSArray, collationStringSelector:Selector) -> NSArray{
+    /*func partitionObjects(array:NSArray, collationStringSelector:Selector) -> NSArray{
         
         let collation:UILocalizedIndexedCollation = UILocalizedIndexedCollation.currentCollation() as UILocalizedIndexedCollation
         
@@ -100,11 +169,11 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         }
         
         return sections;
-    }
+    }*/
 
 
 
-    // MARK: - Table view data source
+    // MARK: - Table view data source (per UILocalizedIndexedCollation)
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
@@ -150,18 +219,18 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     }
 
     
-    /*func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     let showSection:Bool = books.objectAtIndex(section).count != 0
     
     //only show the section title if there are rows in the section
     return (showSection) ? (UILocalizedIndexedCollation.currentCollation().sectionTitles[section] as String) : nil;
     
-    }*/
+    }
 
     
-     /*func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
+    /*func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
         return collation.sectionTitles[section] as String
-    }
+    }*/
     
     func sectionIndexTitlesForTableView(tableView: UITableView!) -> [AnyObject]! {
         return collation.sectionIndexTitles
@@ -172,19 +241,21 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     }
 
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    /*func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections in the table view
         return fetchedResultsController.sections!.count
     }
     
+    
+    // MARK: - Table view data source (per UILocalizedIndexedCollation)
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section
         let sectionInfo = fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
-    }
+    }*/
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    /*func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
         // Put a managed object in the book object
@@ -201,7 +272,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     
     //INDEX:
     
-    func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+    /*func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
         
         //sectionForSectionIndexTitleAtIndex: is a bit buggy, but is still useable
         return UILocalizedIndexedCollation.currentCollation().sectionForSectionIndexTitleAtIndex(index)
@@ -210,7 +281,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     
     func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
         return UILocalizedIndexedCollation.currentCollation().sectionIndexTitles
-    }
+    }*/
 
 
     // Override to support editing the table view.
@@ -225,7 +296,6 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
             // The context couldn't insert the managed object in the database, display an error message in the textView
             print("Failed to save the context with error = \(savingError.localizedDescription)")
         }
-        
     }
     
     

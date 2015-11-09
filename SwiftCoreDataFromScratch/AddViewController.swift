@@ -53,8 +53,7 @@ class AddViewController: UIViewController, NSFetchedResultsControllerDelegate {
         bookObject.bookTitle = bookTitle.text!
         bookObject.authorName = authorName.text!
         bookObject.photoUrl = photoUrl.text!
-        
-        
+                
         let savingError: NSError = NSError(domain: "context", code: 123, userInfo: nil)
         
         // Insert the managed object in the database file

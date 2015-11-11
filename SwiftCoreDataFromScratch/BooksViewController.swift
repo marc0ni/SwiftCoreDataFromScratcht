@@ -18,31 +18,46 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchManagedObjects()
+    
+        let request = NSFetchRequest(entityName: "Book")
+        request.returnsObjectsAsFaults = false
+        let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
+        let context:NSManagedObjectContext = appDelegate.managedObjectContext
+        // since executeFetchRequest can return nil, cast it as an optional array of [BooksViewController]
+        // note: the first [BooksViewController]? Can be omitted
+        //var results : [BooksViewController]? = context.executeFetchRequest(request, error: nil) as? [BooksViewController]
+        
+        let error: NSError? = nil
+        do {
+            let results:[BooksViewController]? = try context.executeFetchRequest(request) as? [BooksViewController]
+            if let bookArray = results   // check for nil and unwrap
+            {
+                for authorName in bookArray as [BooksViewController] {
+                    print("The author's name is \(authorName).")
+                }
+                for bookTitle in bookArray as [BooksViewController] {
+                    print("The book's title is \(bookTitle).")
+                }
+                for photoUrl in bookArray as [BooksViewController] {
+                    print("The photo's URL is \(photoUrl).")
+                }
+            }
+
+        } catch _ as NSError{
+            print("Error: \(error?.localizedDescription)")
+        }
+        
     }
     
-    var books:NSArray = [Book]()
+    
+    //var books:NSArray = [Book]()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        /*let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext
-        
-        let fetchRequest = NSFetchRequest(entityName: "Book")
-        
-        do {
-            let fetchResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
-            if let results = fetchResults {
-                books = results
-            }
-        } catch {
-            print("Could not fetch")
-        }*/
-        
     }
     
-    func fetchResults(){
+    /*func fetchResults(){
         //var error: NSError?
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
@@ -58,7 +73,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         }
         return fetchResults()
         
-    }
+    }*/
     
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var bookObject: Book!
@@ -188,15 +203,15 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         
-        return (books.count > 0) ? books.objectAtIndex(section).count : 0
+        return (bookArray.count > 0) ? bookArray.objectAtIndex(section).count : 0
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
-        if(books.count > 0){
-            let book = books[indexPath.section][indexPath.row] as! Book
+        if(bookArray.count > 0){
+            let book = bookArray[indexPath.section][indexPath.row] as! Book
             
             // Configure the table view cell and return it
             let stringObject = book.photoUrl as String!
@@ -220,7 +235,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
 
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    let showSection:Bool = books.objectAtIndex(section).count != 0
+    let showSection:Bool = bookArray.objectAtIndex(section).count != 0
     
     //only show the section title if there are rows in the section
     return (showSection) ? (UILocalizedIndexedCollation.currentCollation().sectionTitles[section] as String) : nil;

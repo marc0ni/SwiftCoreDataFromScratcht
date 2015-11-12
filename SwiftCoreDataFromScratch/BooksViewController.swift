@@ -14,6 +14,7 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    var bookArray:NSArray = NSArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +31,15 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         let error: NSError? = nil
         do {
             let results:[BooksViewController]? = try context.executeFetchRequest(request) as? [BooksViewController]
-            if let bookArray = results   // check for nil and unwrap
-            {
-                for authorName in bookArray as [BooksViewController] {
+            let bookArray = results!   // check for nil and unwrap
+            do {
+                for authorName in bookArray {
                     print("The author's name is \(authorName).")
                 }
-                for bookTitle in bookArray as [BooksViewController] {
+                for bookTitle in bookArray {
                     print("The book's title is \(bookTitle).")
                 }
-                for photoUrl in bookArray as [BooksViewController] {
+                for photoUrl in bookArray {
                     print("The photo's URL is \(photoUrl).")
                 }
             }
@@ -46,7 +47,6 @@ class BooksViewController: UIViewController, NSFetchedResultsControllerDelegate 
         } catch _ as NSError{
             print("Error: \(error?.localizedDescription)")
         }
-        
     }
     
     
